@@ -54,7 +54,6 @@ export default function MisionVision() {
         </div>
         <div className="absolute w-[60%] h-[60%] bg-white/60 blur-3xl rounded-full z-[-1]" />
       </div>
-
       {/* Contenido principal */}
       <div
         className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 items-center text-center md:text-left gap-12"

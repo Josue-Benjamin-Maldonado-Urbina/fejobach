@@ -1,30 +1,71 @@
 import React from "react";
 
-const objetivos = [
-    "Proveer capacitación a los líderes juveniles y las uniones para que puedan crear ministerios (música, deportes, multimedia, finanzas, predicación) con los cuales alcanzar más personas para Cristo",
-    "Conseguir o generar material efectivo el cual se pueda compartir con las uniones juveniles y si es necesario un programa de actividades.",
-    "Reforzar e involucrarse activamente en el trabajo de la Convención Regional en sus diversas labores (Caravana misionera, misiones con necesidad, mejoras al campamento, etc.)",
-    "Motivar a los jovenes a asumir un rol activo en sus iglesias así como a aceptar el llamado de Dios para sus vidas y al ministerio."
+// Puedes importar tus imágenes así:
+import img1 from "../../assets/objectives/obj1.jpg";
+import img2 from "../../assets/objectives/obj2.jpg";
+import img3 from "../../assets/objectives/obj3.jpg";
+import img4 from "../../assets/objectives/obj4.jpg";
+
+const objectives = [
+  {
+    title: "Capacitar",
+    description:
+      "Proveer capacitación a los líderes juveniles y las uniones para que puedan crear ministerios (música, deportes, multimedia, finanzas, predicación) con los cuales alcanzar más personas para Cristo.",
+    image: img1,
+  },
+  {
+    title: "Materiales",
+    description:
+      "Conseguir o generar material efectivo el cual se pueda compartir con las uniones juveniles y si es necesario un programa de actividades.",
+    image: img2,
+  },
+  {
+    title: "Actividades",
+    description:
+      "Reforzar e involucrarse activamente en el trabajo de la Convención Regional en sus diversas labores (Caravana misionera, misiones con necesidad, mejoras al campamento, etc.",
+    image: img3,
+  },
+  {
+    title: "Motivación",
+    description:
+      "Motivar a los jovenes a asumir un rol activo en sus iglesias así como a aceptar el llamado de Dios para sus vidas y al ministerio.",
+    image: img4,
+  },
 ];
 
-export default function Objetivos() {
-    return (
-        <><div className="min-h-[100dvh] bg-gradient-to-b from-white to-red-50">
-            <section id="objetivos" className="mx-auto max-w-7xl px-6 py-16">
-                <h2 className="text-2xl font-bold text-slate-900">Objetivos</h2>
-                <ul className="mt-6 grid gap-4 md:grid-cols-2">
-                    {objetivos.map((item) => (
-                        <li
-                            key={item}
-                            className="flex items-start gap-3 rounded-xl border border-slate-200 bg-white p-5 shadow-sm"
-                        >
-                            <span className="mt-1 inline-flex h-5 w-5 flex-none items-center justify-center rounded-full bg-red-600 text-white">✓</span>
-                            <p className="text-slate-700">{item}</p>
-                        </li>
-                    ))}
-                </ul>
-            </section>
+export default function Objectives() {
+  return (
+    <section id="objetivos" className="py-20 bg-white px-6">
+      <div className="max-w-7xl mx-auto">
+        <h2 className="text-3xl font-extrabold text-center text-slate-900 mb-12">
+          Nuestros Objetivos
+        </h2>
+
+        <div className="">
+          <div className="min-w-[1000px] grid grid-cols-4 gap-6">
+            {objectives.map((obj, index) => (
+              <div
+                key={index}
+                className="bg-white rounded-xl shadow-lg transform transition-transform hover:scale-105 duration-300 overflow-hidden group"
+              >
+                <img
+                  src={obj.image}
+                  alt={obj.title}
+                  className="w-full h-40 object-cover filter grayscale group-hover:grayscale-0 transition duration-300"
+                />
+                <div className="p-4">
+                  <h3 className="text-lg font-semibold text-slate-800 mb-1">
+                    {obj.title}
+                  </h3>
+                  <p className="text-sm text-slate-600 leading-snug">
+                    {obj.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-            </>
-    );
+      </div>
+    </section>
+  );
 }
