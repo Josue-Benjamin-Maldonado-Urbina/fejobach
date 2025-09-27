@@ -13,6 +13,7 @@ import Evangelismo from "./components/Section/resources/Evangelismo";
 import Multimedia from "./components/Section/resources/Multimedia";
 import DeportesSociales from "./components/Section/resources/DeportesSociales";
 import Activities from "./components/Section/Activities";
+import Meet from "./components/Section/Meet";
 
 export default function App() {
   return (
@@ -31,7 +32,7 @@ export default function App() {
         <Route path="/resources/evangelismo" element={<Evangelismo />} />
         <Route path="/resources/multimedia" element={<Multimedia />} />
         <Route path="/resources/deportes" element={<DeportesSociales />} />
-
+        <Route path="/conocenos" element={<Meet />} />
       </Routes>
     </Router>
   );

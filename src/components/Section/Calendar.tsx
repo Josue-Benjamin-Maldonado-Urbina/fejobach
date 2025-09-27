@@ -63,9 +63,9 @@ const allEvents = [
   {
     date: "2026-07-13",
     title: "Campamento Fejobach",
-    location: "Campamrnto Monte Sion",
+    location: "Campamento Monte Sion",
     image: campamentoImg,
-    description: "Fehca por confirmar.",
+    description: "Fecha por confirmar.",
   },
 ];
 
