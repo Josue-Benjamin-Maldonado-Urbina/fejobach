@@ -14,7 +14,7 @@ const allEvents = [
   {
     date: "2025-09-28",
     title: "Rally Bíblico Fejobach",
-    location: "I. B. Estrella ed Belén - Cintalapa",
+    location: "I. B. Digno es el Cordero - Cintalapa",
     image: misionImg,
     description: "Culto unido con enfoque bíblico en 1ra de Corintios 10-14.",
   },
@@ -49,7 +49,7 @@ const allEvents = [
   {
     date: "2026-03-31",
     title: "Actividad en Zona Altos",
-    location: "Sununil - San Cristobal",
+    location: "Por confirmar",
     image: altosImg,
     description: "Culto unido zona de los altos de Chiapas.",
   },

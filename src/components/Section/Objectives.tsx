@@ -22,7 +22,7 @@ const objectives = [
   {
     title: "Actividades",
     description:
-      "Reforzar e involucrarse activamente en el trabajo de la Convención Regional en sus diversas labores (Caravana misionera, misiones con necesidad, mejoras al campamento, etc.",
+      "Reforzar e involucrarse activamente en el trabajo de la Convención Regional en sus diversas labores (Caravana misionera, misiones con necesidad, mejoras al campamento, etc).",
     image: img3,
   },
   {
