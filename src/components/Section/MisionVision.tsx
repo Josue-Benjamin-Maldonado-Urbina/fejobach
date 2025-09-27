@@ -1,106 +1,86 @@
-import React, { useEffect, useRef } from "react";
-import {
-  motion,
-  useMotionValue,
-  useTransform,
-  useInView,
-} from "framer-motion";
-import logo from "../../assets/fejobach-logo.png";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import misionImg from "../../assets/misionvision/mision.jpg";
+import visionImg from "../../assets/misionvision/vision.jpg";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+
+const slides = [
+  {
+    title: "Nuestra Misión",
+    description:
+      "Fomentar el crecimiento espiritual de los jóvenes, promoviendo valores cristianos, amor al prójimo y participación activa en la comunidad.",
+    image: misionImg,
+  },
+  {
+    title: "Nuestra Visión",
+    description:
+      "Ser una comunidad joven influyente que vive su fe en acción, inspirando a otros a través del ejemplo, el servicio y el testimonio cristiano.",
+    image: visionImg,
+  },
+];
 
 export default function MisionVision() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const missionRef = useRef(null);
-  const visionRef = useRef(null);
-  const logoRef = useRef(null);
+  const [index, setIndex] = useState(0);
 
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  const rotateX = useTransform(mouseY, [0, 1], [15, -15]);
-  const rotateY = useTransform(mouseX, [0, 1], [-15, 15]);
-
-  const isMissionInView = useInView(missionRef, { once: true, margin: "-100px" });
-  const isVisionInView = useInView(visionRef, { once: true, margin: "-100px" });
-  const isLogoInView = useInView(logoRef, { once: true, margin: "-100px" });
-
-  useEffect(() => {
-    const container = containerRef.current;
-    const handleMouseMove = (e: MouseEvent) => {
-      if (!container) return;
-      const { left, top, width, height } = container.getBoundingClientRect();
-      const x = (e.clientX - left) / width;
-      const y = (e.clientY - top) / height;
-      mouseX.set(x);
-      mouseY.set(y);
-    };
-    container?.addEventListener("mousemove", handleMouseMove);
-    return () => container?.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
+  const handleNext = () => setIndex((prev) => (prev + 1) % slides.length);
+  const handlePrev = () => setIndex((prev) => (prev - 1 + slides.length) % slides.length);
 
   return (
-    <section
-      id="mision"
-      className="relative overflow-hidden bg-white py-32 px-6"
-    >
-      {/* Fondo cuadriculado animado */}
-      <div className="absolute inset-0 z-0 flex items-center justify-center">
-        <div className="w-[150%] h-[150%] grid grid-cols-12 grid-rows-6 gap-px opacity-20 animate-pulse-slow scale-105">
-          {Array.from({ length: 72 }).map((_, i) => (
-            <div
-              key={i}
-              className="bg-gradient-to-br from-red-200/40 to-purple-300/40 border border-slate-300/30"
-            />
-          ))}
-        </div>
-        <div className="absolute w-[60%] h-[60%] bg-white/60 blur-3xl rounded-full z-[-1]" />
-      </div>
-      {/* Contenido principal */}
-      <div
-        className="relative z-10 max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 items-center text-center md:text-left gap-12"
-        ref={containerRef}
-      >
-        {/* Misión */}
+    <section id="mision" className="py-36 bg-white px-8 overflow-hidden">
+      <div className="max-w-7xl mx-auto flex flex-col-reverse lg:flex-row items-center gap-16">
+        {/* Texto con animación */}
         <motion.div
-          ref={missionRef}
-          initial={{ opacity: 0, y: 50, color: "#991b1b" }}
-          animate={isMissionInView ? { opacity: 1, y: 0, color: "#dc2626" } : {}}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          key={slides[index].title}
+          className="w-full lg:w-1/2 text-center lg:text-left"
+          initial={{ opacity: 0, x: -40 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
         >
-          <h3 className="text-2xl font-semibold mb-3">Misión</h3>
-          <p className="text-slate-700 leading-relaxed">
-            Fomentar el crecimiento espiritual de los jóvenes, promoviendo
-            valores cristianos, amor al prójimo y participación activa en la comunidad.
+          <h2 className="text-4xl font-bold text-slate-900 mb-8 mt-12">
+            {slides[index].title}
+          </h2>
+          <p className="text-lg text-slate-600 leading-relaxed mb-6">
+            {slides[index].description}
           </p>
+
+          {/* Botones de navegación */}
+          <div className="flex justify-center lg:justify-start gap-4 mt-6">
+            <button
+              onClick={handlePrev}
+              aria-label="Anterior"
+              className="p-2 rounded-full bg-red-100 hover:bg-red-200 text-red-600 transition"
+            >
+              <ChevronLeft size={24} />
+            </button>
+            <button
+              onClick={handleNext}
+              aria-label="Siguiente"
+              className="p-2 rounded-full bg-red-100 hover:bg-red-200 text-red-600 transition"
+            >
+              <ChevronRight size={24} />
+            </button>
+          </div>
         </motion.div>
 
-        {/* Logo con animación de entrada y rotación */}
+        {/* Imagen con círculo decorativo */}
         <motion.div
-          ref={logoRef}
-          style={{ rotateX, rotateY }}
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={isLogoInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.9, ease: "easeOut", delay: 0.1 }}
-          className="mx-auto w-36 md:w-44 logo-3d"
+          key={slides[index].image}
+          className="relative w-full lg:w-1/2 flex justify-center items-center"
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
         >
+          {/* Círculo decorativo rojo */}
+          <div className="absolute w-[400px] h-[400px] sm:w-[500px] sm:h-[500px] lg:w-[550px] lg:h-[550px] bg-red-100 rounded-full z-0" />
+
+          {/* Imagen con hover */}
           <img
-            src={logo}
-            alt="Fejobach Logo"
-            className="w-full h-auto drop-shadow-xl rounded-xl"
+            src={slides[index].image}
+            alt={slides[index].title}
+            className="relative z-10 w-full max-w-md rounded-xl shadow-xl hover:scale-105 transition-transform duration-300"
           />
-        </motion.div>
-
-        {/* Visión */}
-        <motion.div
-          ref={visionRef}
-          initial={{ opacity: 0, y: 50, color: "#991b1b" }}
-          animate={isVisionInView ? { opacity: 1, y: 0, color: "#dc2626" } : {}}
-          transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-        >
-          <h3 className="text-2xl font-semibold mb-3">Visión</h3>
-          <p className="text-slate-700 leading-relaxed">
-            Ser una comunidad joven influyente que vive su fe en acción,
-            inspirando a otros a través del ejemplo, el servicio y el testimonio cristiano.
-          </p>
         </motion.div>
       </div>
     </section>

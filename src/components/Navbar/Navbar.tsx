@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import fejobachLogo from "../../assets/fejobach-logo.png";
+import fejobachLogoHorizontal from "../../assets/fejobach-logo-2.png";
 import Dropdown from "./Dropdown";
 
 export default function Navbar() {
@@ -29,7 +29,7 @@ export default function Navbar() {
             <nav className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
                 {/* Logo */}
                 <Link to="/" className="flex items-center gap-2">
-                    <img src={fejobachLogo} alt="Fejobach Logo" className="h-8 w-auto" />
+                    <img src={fejobachLogoHorizontal} alt="Fejobach Logo" className="h-8 w-auto" />
                 </Link>
 
                 {/* Botón hamburguesa (solo en mobile) */}
@@ -85,8 +85,8 @@ export default function Navbar() {
 
                     </li>
 
-                    <li><Link to="/actividades" className="hover:text-slate-900">Actividades</Link></li>
-                    <li><Link to="/contacto" className="hover:text-slate-900">Contacto</Link></li>
+                    <li><Link to="/calendar" className="hover:text-slate-900">Calendario</Link></li>
+                    <li><Link to="/resources" className="hover:text-slate-900">Recursos</Link></li>
                 </ul>
             </nav>
 

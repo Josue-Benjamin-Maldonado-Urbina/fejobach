@@ -38,7 +38,7 @@ export default function Hero() {
                     </a>
 
                     <a
-                        href="/#contacto"
+                        href="/activities"
                         className="px-6 py-3 rounded-full border border-white text-white hover:bg-white hover:text-red-600 transition"
                     >
                         Ver actividades

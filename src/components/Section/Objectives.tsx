@@ -42,7 +42,7 @@ export default function Objectives() {
         </h2>
 
         <div className="">
-          <div className="min-w-[1000px] grid grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {objectives.map((obj, index) => (
               <div
                 key={index}

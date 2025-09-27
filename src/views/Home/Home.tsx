@@ -4,6 +4,7 @@ import MisionVision from "../../components/Section/MisionVision";
 import Objetivos from "../../components/Section/Objectives";
 import Footer from "../../components/Section/Footer";
 import Navbar from "../../components/Navbar/Navbar";
+import Contact from "../../components/Section/Contact";
 
 export default function Home() {
   return (
@@ -23,23 +24,9 @@ export default function Home() {
         </section>
 
         <section id="contacto">
-          {/* Puedes poner aquí un formulario o contacto general si no tienes uno aún */}
-          <div className="mx-auto max-w-7xl px-6 py-16">
-            <h2 className="text-2xl font-bold text-slate-900">Contacto</h2>
-            <p className="mt-4 text-slate-600">
-              Puedes escribirnos a{" "}
-              <a
-                href="mailto:hola@fejobach.org"
-                className="text-red-600 underline"
-              >
-                hola@fejobach.org
-              </a>{" "}
-              o seguirnos en nuestras redes sociales.
-            </p>
-          </div>
+          <Contact></Contact>
         </section>
       </main>
-
       <Footer />
     </div>
   );
