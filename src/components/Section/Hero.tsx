@@ -1,10 +1,6 @@
 import React from "react";
-import heroImage from "../../assets/hero-bg.jpg";
-import { FaFacebook, FaWhatsapp } from 'react-icons/fa6';
-import whatsappIcon from "../../assets/icons/whatsapp.svg";
+import heroImage from "../../assets/hero-bg.webp";
 import facebookIcon from "../../assets/icons/facebook1.svg";
-import instagramIcon from "../../../assets/icons/instagram.svg";
-
 
 export default function Hero() {
     return (
@@ -14,7 +10,7 @@ export default function Hero() {
             style={{ backgroundImage: `url(${heroImage})` }}
         >
             {/* Overlay morado */}
-            <div className="absolute inset-0 bg-purple-900 opacity-70" />
+            <div className="absolute inset-0 bg-red-500 opacity-50" />
 
             {/* Contenido centrado */}
             <div className="relative z-10 text-center text-white px-4 max-w-3xl">

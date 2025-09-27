@@ -12,6 +12,7 @@ import Predicacion from "./components/Section/resources/Predicacion";
 import Evangelismo from "./components/Section/resources/Evangelismo";
 import Multimedia from "./components/Section/resources/Multimedia";
 import DeportesSociales from "./components/Section/resources/DeportesSociales";
+import Activities from "./components/Section/Activities";
 
 export default function App() {
   return (
@@ -20,7 +21,7 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/" element={<MisionVision />} />
         <Route path="/" element={<Objetivos />} />
-        <Route path="/actividades" element={<Actividades />} />
+        <Route path="/activities" element={<Activities />} />
         <Route path="/calendar" element={<Calendario />} />
         <Route path="/resources" element={<Resources />} />
         <Route path="/construccion" element={<UnderConstruction />} />

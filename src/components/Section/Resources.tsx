@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import alabanzaImg from "../../assets/resources/alabanza.jpg";
-import predicacionImg from "../../assets/resources/predicacion.jpg";
-import evangelismoImg from "../../assets/resources/evangelismo.jpg";
-import multimediaImg from "../../assets/resources/multimedia.jpg";
-import deportesImg from "../../assets/resources/deportes.jpg";
+import alabanzaImg from "../../assets/resources/alabanza.webp";
+import predicacionImg from "../../assets/resources/predicacion.webp";
+import evangelismoImg from "../../assets/resources/evangelismo.webp";
+import multimediaImg from "../../assets/resources/multimedia.webp";
+import deportesImg from "../../assets/resources/deportes.webp";
 import Navbar from "../Navbar/Navbar";
+import Footer from "./Footer";
 
 const resources = [
   {
@@ -68,6 +69,6 @@ export default function Resources() {
           ))}
         </div>
       </div>
-    </section></>
+    </section><Footer></Footer></>
   );
 }

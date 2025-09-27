@@ -1,10 +1,10 @@
 import React from "react";
 
 // Puedes importar tus imágenes así:
-import img1 from "../../assets/objectives/obj1.jpg";
-import img2 from "../../assets/objectives/obj2.jpg";
-import img3 from "../../assets/objectives/obj3.jpg";
-import img4 from "../../assets/objectives/obj4.jpg";
+import img1 from "../../assets/objectives/obj1.webp";
+import img2 from "../../assets/objectives/obj2.webp";
+import img3 from "../../assets/objectives/obj3.webp";
+import img4 from "../../assets/objectives/obj4.webp";
 
 const objectives = [
   {

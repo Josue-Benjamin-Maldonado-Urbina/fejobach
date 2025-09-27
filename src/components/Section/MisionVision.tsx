@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import misionImg from "../../assets/misionvision/mision.jpg";
-import visionImg from "../../assets/misionvision/vision.jpg";
+import misionImg from "../../assets/misionvision/mision.webp";
+import visionImg from "../../assets/misionvision/vision.webp";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const slides = [
