@@ -8,7 +8,7 @@ import Contact from "../../components/Section/Contact";
 
 export default function Home() {
   return (
-    <div className="min-h-[100dvh] bg-gradient-to-b from-white to-red-50">
+    <div className="min-h-[100dvh] bg-gradient-to-b from-white to-red-50 scroll-smooth">
       <Navbar />
 
       <main>

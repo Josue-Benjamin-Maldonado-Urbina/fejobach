@@ -14,6 +14,7 @@ import Multimedia from "./components/Section/resources/Multimedia";
 import DeportesSociales from "./components/Section/resources/DeportesSociales";
 import Activities from "./components/Section/Activities";
 import Meet from "./components/Section/Meet";
+import SportsEventRegister from "./components/Section/Deportive";
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ export default function App() {
         <Route path="/resources/multimedia" element={<Multimedia />} />
         <Route path="/resources/deportes" element={<DeportesSociales />} />
         <Route path="/conocenos" element={<Meet />} />
+        <Route path="/actividad-deportiva" element={<SportsEventRegister />} />
       </Routes>
     </Router>
   );

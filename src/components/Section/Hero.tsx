@@ -34,10 +34,10 @@ export default function Hero() {
                     </a>
 
                     <a
-                        href="/activities"
+                        href="/actividad-deportiva"
                         className="px-6 py-3 rounded-full border border-white text-white hover:bg-white hover:text-red-600 transition"
                     >
-                        Ver actividades
+                        Actividad Deportiva
                     </a>
                 </div>
             </div>

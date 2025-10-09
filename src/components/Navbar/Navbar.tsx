@@ -41,7 +41,7 @@ export default function Navbar() {
         >
             <nav className="mx-auto max-w-7xl px-6 py-4 flex items-center justify-between">
                 {/* Logo */}
-                <Link to="#" className="flex items-center gap-2">
+                <Link to="/" className="flex items-center gap-2">
                     <img
                         src={fejobachLogoHorizontal}
                         alt="Fejobach Logo"
