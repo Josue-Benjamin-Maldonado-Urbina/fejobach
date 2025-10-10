@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./views/Home/Home";
-import UnderConstruction from "./views/UnderConstruction/UnderConstruction";
 import MisionVision from "./components/Section/MisionVision";
 import Objetivos from "./components/Section/Objectives";
 import Actividades from "./components/Section/Activities";
@@ -15,6 +14,7 @@ import DeportesSociales from "./components/Section/resources/DeportesSociales";
 import Activities from "./components/Section/Activities";
 import Meet from "./components/Section/Meet";
 import SportsEventRegister from "./components/Section/Deportive";
+import ActivitiesPast from "./components/Section/ActivitiesPast";
 
 export default function App() {
   return (
@@ -26,8 +26,6 @@ export default function App() {
         <Route path="/activities" element={<Activities />} />
         <Route path="/calendar" element={<Calendario />} />
         <Route path="/resources" element={<Resources />} />
-        <Route path="/construccion" element={<UnderConstruction />} />
-        <Route path="/recurso-no-disponible" element={<UnderConstruction />} />
         <Route path="/resources/alabanza" element={<Alabanza />} />
         <Route path="/resources/predicacion" element={<Predicacion />} />
         <Route path="/resources/evangelismo" element={<Evangelismo />} />
@@ -35,6 +33,7 @@ export default function App() {
         <Route path="/resources/deportes" element={<DeportesSociales />} />
         <Route path="/conocenos" element={<Meet />} />
         <Route path="/actividad-deportiva" element={<SportsEventRegister />} />
+        <Route path="/pasado" element={<ActivitiesPast />} />
       </Routes>
     </Router>
   );

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import misionImg from "../../assets/calendar/rally.webp";
 import canaHuecaImg from "../../assets/calendar/cana-hueca.webp";
 import cultoUnidoImg from "../../assets/calendar/culto-unido.webp";
@@ -55,7 +56,7 @@ const allEvents = [
   },
   {
     date: "2026-06-07",
-    title: "Concierto Fejobach",
+    title: "Concierto Fejobach (Actividad Deportiva)",
     location: "Estrella de Belén - Cintalapa",
     image: conciertoImg,
     description: "Evento musical cristiano abierto a todo público.",
@@ -95,99 +96,103 @@ export default function Calendar() {
   );
 
   return (
-    <><Navbar></Navbar><section id="calendar" className="py-20 bg-white px-6">
-          <div className="max-w-7xl mx-auto">
-              <h2 className="text-4xl font-bold text-center text-slate-900 mb-12">
-                  Calendario Fejobach
-              </h2>
+    <>
+      <Navbar />
+      <section id="calendar" className="py-20 bg-white px-6">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-4xl font-bold text-center text-slate-900 mb-12">
+            Calendario Fejobach
+          </h2>
 
-              {Object.keys(groupedByYear)
-                  .sort()
-                  .map((year) => (
-                      <div key={year} className="mb-16">
-                          <h3 className="text-2xl font-semibold mb-6 text-slate-800">
-                              Eventos {year}
-                          </h3>
-                          <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-4">
-                              {groupedByYear[year].map((event, index) => {
-                                  const { day, month } = formatDate(event.date);
-                                  return (
-                                      <div
-                                          key={index}
-                                          className="bg-white shadow-md rounded-md overflow-hidden hover:shadow-lg transition"
-                                      >
-                                          <div className="h-40 overflow-hidden">
-                                              <img
-                                                  src={event.image}
-                                                  alt={event.title}
-                                                  className="object-cover w-full h-full" />
-                                          </div>
-                                          <div className="p-4">
-                                              <div className="flex items-center gap-4 mb-2">
-                                                  <div className="bg-red-600 text-white px-3 py-1 rounded text-center">
-                                                      <div className="text-lg font-bold">{day}</div>
-                                                      <div className="text-sm uppercase">{month}</div>
-                                                  </div>
-                                                  <div>
-                                                      <h4 className="text-lg font-semibold text-slate-900">
-                                                          {event.title}
-                                                      </h4>
-                                                      <p className="text-sm text-slate-600">
-                                                          {event.location}
-                                                      </p>
-                                                  </div>
-                                              </div>
-                                              <button
-                                                  onClick={() => openModal(event)}
-                                                  className="text-sm text-red-600 hover:underline"
-                                              >
-                                                  Más información
-                                              </button>
-                                          </div>
-                                      </div>
-                                  );
-                              })}
-                          </div>
-                      </div>
-                  ))}
-
-              {/* MODAL */}
-              {selectedEvent && (
-                  <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-                      <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-6 relative animate-fade-in">
-                          <button
-                              className="absolute top-2 right-3 text-slate-500 hover:text-red-600 text-xl"
-                              onClick={closeModal}
-                          >
-                              ×
-                          </button>
+          {Object.keys(groupedByYear)
+            .sort()
+            .map((year) => (
+              <div key={year} className="mb-16">
+                <h3 className="text-2xl font-semibold mb-6 text-slate-800">
+                  Eventos {year}
+                </h3>
+                <div className="grid gap-6 md:grid-cols-3 lg:grid-cols-4">
+                  {groupedByYear[year].map((event, index) => {
+                    const { day, month } = formatDate(event.date);
+                    return (
+                      <div
+                        key={index}
+                        className="bg-white shadow-md rounded-md overflow-hidden hover:shadow-lg transition"
+                      >
+                        <div className="h-40 overflow-hidden">
                           <img
-                              src={selectedEvent.image}
-                              alt={selectedEvent.title}
-                              className="w-full h-56 object-cover rounded mb-4" />
-                          <h3 className="text-2xl font-bold mb-2 text-slate-900">
-                              {selectedEvent.title}
-                          </h3>
-                          <p className="text-sm text-slate-600 mb-1">
-                              📍 <strong>Lugar:</strong> {selectedEvent.location}
-                          </p>
-                          <p className="text-sm text-slate-600 mb-1">
-                              📅 <strong>Fecha:</strong>{" "}
-                              {new Date(selectedEvent.date).toLocaleDateString("es-MX", {
-                                  weekday: "long",
-                                  day: "numeric",
-                                  month: "long",
-                                  year: "numeric",
-                              })}
-                          </p>
-                          <p className="text-slate-700 mt-4">
-                              {selectedEvent.description}
-                          </p>
+                            src={event.image}
+                            alt={event.title}
+                            className="object-cover w-full h-full"
+                          />
+                        </div>
+                        <div className="p-4">
+                          <div className="flex items-center gap-4 mb-2">
+                            <div className="bg-red-600 text-white px-3 py-1 rounded text-center">
+                              <div className="text-lg font-bold">{day}</div>
+                              <div className="text-sm uppercase">{month}</div>
+                            </div>
+                            <div>
+                              <h4 className="text-lg font-semibold text-slate-900">
+                                {event.title}
+                              </h4>
+                              <p className="text-sm text-slate-600">
+                                {event.location}
+                              </p>
+                            </div>
+                          </div>
+
+                          <button
+                            onClick={() => openModal(event)}
+                            className="text-sm text-red-600 hover:underline mb-2"
+                          >
+                            Más información
+                          </button>
+                        </div>
                       </div>
-                  </div>
-              )}
-          </div>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+
+          {/* MODAL */}
+          {selectedEvent && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+              <div className="bg-white rounded-lg shadow-lg max-w-lg w-full p-6 relative animate-fade-in">
+                <button
+                  className="absolute top-2 right-3 text-slate-500 hover:text-red-600 text-xl"
+                  onClick={closeModal}
+                >
+                  ×
+                </button>
+                <img
+                  src={selectedEvent.image}
+                  alt={selectedEvent.title}
+                  className="w-full h-56 object-cover rounded mb-4"
+                />
+                <h3 className="text-2xl font-bold mb-2 text-slate-900">
+                  {selectedEvent.title}
+                </h3>
+                <p className="text-sm text-slate-600 mb-1">
+                  📍 <strong>Lugar:</strong> {selectedEvent.location}
+                </p>
+                <p className="text-sm text-slate-600 mb-1">
+                  📅 <strong>Fecha:</strong>{" "}
+                  {new Date(selectedEvent.date).toLocaleDateString("es-MX", {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric",
+                  })}
+                </p>
+                <p className="text-slate-700 mt-4">{selectedEvent.description}</p>
+              </div>
+            </div>
+          )}
+        </div>
       </section>
-      <Footer></Footer></>
+      <Footer />
+    </>
   );
 }
