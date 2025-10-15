@@ -10,30 +10,35 @@ export default function SportsEventDetail() {
   const [formData, setFormData] = useState({
     equipo: "",
     iglesia: "",
-    deportes: [] as string[],
+    deportesFemenil: [] as string[],
+    deportesVaronil: [] as string[],
     lider: "",
     email: "",
-    integrantes: "",
+    integrantesFemenil: "",
+    integrantesVaronil: "",
     color: "",
+    llevaPorra: "", // "sí" o "no"
+    numPorristas: "",
   });
 
   const [sending, setSending] = useState(false);
   const [success, setSuccess] = useState(false);
 
   const colors = [
-    "Verde", "Amarillo", "Naranja", "Morado", "Blanco", "Gris", "Turquesa", "Fucsia", "Lima", "Vino", "Beige",
-    "Marrón", "Celeste", "Oro", "Plata", "Lavanda", "Marino",
-    "Cian", "Coral", "Oliva", "Rosa", "Mostaza"
+    "Verde", "Azul", "Negro", "Amarillo", "Naranja", "Morado", "Blanco", "Gris", "Turquesa", "Fucsia", "Lima", "Vino", "Beige",
+    "Marrón", "Celeste", "Oro", "Plata", "Lavanda", "Marino", "Cian", "Coral", "Oliva", "Rosa", "Mostaza"
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, checked, type } = e.target as HTMLInputElement;
+
     if (type === "checkbox") {
+      const [campo, deporte] = name.split("_");
       setFormData((prev) => ({
         ...prev,
-        deportes: checked
-          ? [...prev.deportes, value]
-          : prev.deportes.filter((d) => d !== value),
+        [campo]: checked
+          ? [...(prev as any)[campo], deporte]
+          : (prev as any)[campo].filter((d: string) => d !== deporte),
       }));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
@@ -43,13 +48,19 @@ export default function SportsEventDetail() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validaciones básicas
-    if (formData.deportes.length === 0) {
-      alert("Selecciona al menos un deporte.");
+    if (
+      formData.deportesFemenil.length === 0 &&
+      formData.deportesVaronil.length === 0
+    ) {
+      alert("Selecciona al menos un deporte en alguna categoría.");
       return;
     }
     if (!formData.color) {
       alert("Selecciona un color de uniforme.");
+      return;
+    }
+    if (formData.llevaPorra === "sí" && !formData.numPorristas) {
+      alert("Indica el número aproximado de personas en la porra.");
       return;
     }
 
@@ -63,11 +74,18 @@ export default function SportsEventDetail() {
         {
           equipo: formData.equipo,
           iglesia: formData.iglesia,
-          deportes: formData.deportes.join(", "),
+          deportesFemenil: formData.deportesFemenil.join(", ") || "N/A",
+          deportesVaronil: formData.deportesVaronil.join(", ") || "N/A",
           lider: formData.lider,
           email: formData.email,
-          integrantes: formData.integrantes,
+          integrantesFemenil: formData.integrantesFemenil || "0",
+          integrantesVaronil: formData.integrantesVaronil || "0",
           color: formData.color,
+          llevaPorra: formData.llevaPorra || "No",
+          numPorristas:
+            formData.llevaPorra === "sí"
+              ? formData.numPorristas || "No especificado"
+              : "N/A",
         },
         "ZJaWSKHxAeJlk8YYq"
       )
@@ -77,13 +95,16 @@ export default function SportsEventDetail() {
         setFormData({
           equipo: "",
           iglesia: "",
-          deportes: [],
+          deportesFemenil: [],
+          deportesVaronil: [],
           lider: "",
           email: "",
-          integrantes: "",
+          integrantesFemenil: "",
+          integrantesVaronil: "",
           color: "",
+          llevaPorra: "",
+          numPorristas: "",
         });
-
         setTimeout(() => setSuccess(false), 4000);
       })
       .catch((err) => {
@@ -171,15 +192,16 @@ export default function SportsEventDetail() {
                 className="w-full border border-slate-300 rounded px-4 py-2"
               />
 
+              {/* Deportes Femenil */}
               <div>
-                <label className="block font-medium mb-1">Deportes</label>
+                <label className="block font-medium mb-1">Deportes - Femenil</label>
                 <div className="space-y-1">
                   {["futbol", "basquetbol", "voleibol"].map((deporte) => (
-                    <label key={deporte} className="flex items-center gap-2">
+                    <label key={`f_${deporte}`} className="flex items-center gap-2">
                       <input
                         type="checkbox"
-                        value={deporte}
-                        checked={formData.deportes.includes(deporte)}
+                        name={`deportesFemenil_${deporte}`}
+                        checked={formData.deportesFemenil.includes(deporte)}
                         onChange={handleChange}
                       />
                       {deporte.charAt(0).toUpperCase() + deporte.slice(1)}
@@ -187,6 +209,74 @@ export default function SportsEventDetail() {
                   ))}
                 </div>
               </div>
+
+              <input
+                type="number"
+                name="integrantesFemenil"
+                placeholder="Cantidad de integrantes femenil"
+                value={formData.integrantesFemenil}
+                onChange={handleChange}
+                min={0}
+                className="w-full border border-slate-300 rounded px-4 py-2"
+              />
+
+              {/* Deportes Varonil */}
+              <div>
+                <label className="block font-medium mb-1">Deportes - Varonil</label>
+                <div className="space-y-1">
+                  {["futbol", "basquetbol", "voleibol"].map((deporte) => (
+                    <label key={`v_${deporte}`} className="flex items-center gap-2">
+                      <input
+                        type="checkbox"
+                        name={`deportesVaronil_${deporte}`}
+                        checked={formData.deportesVaronil.includes(deporte)}
+                        onChange={handleChange}
+                      />
+                      {deporte.charAt(0).toUpperCase() + deporte.slice(1)}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <input
+                type="number"
+                name="integrantesVaronil"
+                placeholder="Cantidad de integrantes varonil"
+                value={formData.integrantesVaronil}
+                onChange={handleChange}
+                min={0}
+                className="w-full border border-slate-300 rounded px-4 py-2"
+              />
+
+              {/* Porra */}
+              <div>
+                <label className="block font-medium mb-1">
+                  ¿El equipo llevará porra?
+                </label>
+                <select
+                  name="llevaPorra"
+                  value={formData.llevaPorra}
+                  onChange={handleChange}
+                  required
+                  className="w-full border border-slate-300 rounded px-4 py-2"
+                >
+                  <option value="">Selecciona una opción</option>
+                  <option value="sí">Sí</option>
+                  <option value="no">No</option>
+                </select>
+              </div>
+
+              {formData.llevaPorra === "sí" && (
+                <input
+                  type="number"
+                  name="numPorristas"
+                  placeholder="Número aproximado de porristas"
+                  value={formData.numPorristas}
+                  onChange={handleChange}
+                  min={1}
+                  className="w-full border border-slate-300 rounded px-4 py-2"
+                />
+              )}
 
               <input
                 type="text"
@@ -205,17 +295,6 @@ export default function SportsEventDetail() {
                 value={formData.email}
                 onChange={handleChange}
                 required
-                className="w-full border border-slate-300 rounded px-4 py-2"
-              />
-
-              <input
-                type="number"
-                name="integrantes"
-                placeholder="Cantidad de integrantes (incluyendo porra)"
-                value={formData.integrantes}
-                onChange={handleChange}
-                required
-                min={1}
                 className="w-full border border-slate-300 rounded px-4 py-2"
               />
 
