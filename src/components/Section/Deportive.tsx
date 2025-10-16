@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import emailjs from "@emailjs/browser";
+import Swal from "sweetalert2"; // 🆕 Importar SweetAlert2
 import headerImg from "../../assets/hero-futbol.webp";
 import futbolImg from "../../assets/futbol.jpg";
 import cartaResponsiva from "../../assets/responsive_cart.pdf";
@@ -13,19 +14,19 @@ export default function SportsEventDetail() {
     deportesFemenil: [] as string[],
     deportesVaronil: [] as string[],
     lider: "",
+    telefono: "",
     email: "",
     integrantesFemenil: "",
     integrantesVaronil: "",
-    color: "",
-    llevaPorra: "", // "sí" o "no"
+    llevaPorra: "",
     numPorristas: "",
+    color: "",
   });
 
   const [sending, setSending] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   const colors = [
-    "Verde", "Azul", "Negro", "Amarillo", "Naranja", "Morado", "Blanco", "Gris", "Turquesa", "Fucsia", "Lima", "Vino", "Beige",
+    "Azul", "Verde", "Amarillo", "Naranja", "Morado", "Gris", "Turquesa", "Fucsia", "Lima", "Vino", "Beige",
     "Marrón", "Celeste", "Oro", "Plata", "Lavanda", "Marino", "Cian", "Coral", "Oliva", "Rosa", "Mostaza"
   ];
 
@@ -48,24 +49,28 @@ export default function SportsEventDetail() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validaciones básicas
     if (
       formData.deportesFemenil.length === 0 &&
       formData.deportesVaronil.length === 0
     ) {
-      alert("Selecciona al menos un deporte en alguna categoría.");
+      Swal.fire("Atención", "Selecciona al menos un deporte en alguna categoría.", "warning");
       return;
     }
     if (!formData.color) {
-      alert("Selecciona un color de uniforme.");
+      Swal.fire("Atención", "Selecciona un color de uniforme.", "warning");
+      return;
+    }
+    if (!formData.telefono) {
+      Swal.fire("Atención", "Ingresa el número telefónico del líder.", "warning");
       return;
     }
     if (formData.llevaPorra === "sí" && !formData.numPorristas) {
-      alert("Indica el número aproximado de personas en la porra.");
+      Swal.fire("Atención", "Indica el número aproximado de personas en la porra.", "warning");
       return;
     }
 
     setSending(true);
-    setSuccess(false);
 
     emailjs
       .send(
@@ -76,40 +81,47 @@ export default function SportsEventDetail() {
           iglesia: formData.iglesia,
           deportesFemenil: formData.deportesFemenil.join(", ") || "N/A",
           deportesVaronil: formData.deportesVaronil.join(", ") || "N/A",
-          lider: formData.lider,
-          email: formData.email,
           integrantesFemenil: formData.integrantesFemenil || "0",
           integrantesVaronil: formData.integrantesVaronil || "0",
-          color: formData.color,
+          lider: formData.lider,
+          telefono: formData.telefono,
+          email: formData.email,
           llevaPorra: formData.llevaPorra || "No",
           numPorristas:
             formData.llevaPorra === "sí"
               ? formData.numPorristas || "No especificado"
               : "N/A",
+          color: formData.color,
         },
         "ZJaWSKHxAeJlk8YYq"
       )
       .then(() => {
         setSending(false);
-        setSuccess(true);
+        Swal.fire({
+          title: "¡Registro enviado!",
+          text: "Tu registro ha sido enviado con éxito 🎉",
+          icon: "success",
+          confirmButtonColor: "#16a34a",
+        });
+
         setFormData({
           equipo: "",
           iglesia: "",
           deportesFemenil: [],
           deportesVaronil: [],
           lider: "",
+          telefono: "",
           email: "",
           integrantesFemenil: "",
           integrantesVaronil: "",
-          color: "",
           llevaPorra: "",
           numPorristas: "",
+          color: "",
         });
-        setTimeout(() => setSuccess(false), 4000);
       })
       .catch((err) => {
         console.error("Error al enviar", err);
-        alert("Hubo un problema al enviar el formulario. Intenta nuevamente.");
+        Swal.fire("Error", "Hubo un problema al enviar el formulario. Intenta nuevamente.", "error");
         setSending(false);
       });
   };
@@ -288,6 +300,18 @@ export default function SportsEventDetail() {
                 className="w-full border border-slate-300 rounded px-4 py-2"
               />
 
+              {/* Teléfono */}
+              <input
+                type="tel"
+                name="telefono"
+                placeholder="Número telefónico del líder"
+                value={formData.telefono}
+                onChange={handleChange}
+                required
+                pattern="[0-9]{10}"
+                className="w-full border border-slate-300 rounded px-4 py-2"
+              />
+
               <input
                 type="email"
                 name="email"
@@ -319,16 +343,10 @@ export default function SportsEventDetail() {
               <button
                 type="submit"
                 disabled={sending}
-                className="bg-red-500 text-white px-6 py-3 rounded-md hover:bg-red-600 transition disabled:opacity-50"
+                className="bg-red-500 text-white px-6 py-3 rounded-md hover:bg-red-600 transition disabled:opacity-50 w-full"
               >
                 {sending ? "Enviando..." : "Enviar Registro"}
               </button>
-
-              {success && (
-                <p className="text-green-600 text-sm mt-2">
-                  ¡Registro enviado con éxito!
-                </p>
-              )}
             </form>
           </div>
         </div>
