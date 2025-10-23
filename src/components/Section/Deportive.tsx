@@ -27,7 +27,7 @@ export default function SportsEventDetail() {
 
   const colors = [
     "Verde", "Amarillo", "Naranja", "Morado", "Gris", "Turquesa", "Fucsia", "Lima", "Vino", "Beige",
-    "Marrón", "Celeste", "Oro", "Plata", "Lavanda", "Marino", "Cian", "Coral", "Oliva", "Rosa", "Mostaza"
+    "Marrón", "Oro", "Plata", "Lavanda", "Cian", "Coral", "Oliva", "Rosa", "Mostaza"
   ];
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
