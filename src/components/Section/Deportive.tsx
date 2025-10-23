@@ -26,7 +26,7 @@ export default function SportsEventDetail() {
   const [sending, setSending] = useState(false);
 
   const colors = [
-    "Verde", "Amarillo", "Naranja", "Morado", "Gris", "Turquesa", "Fucsia", "Lima", "Vino", "Beige",
+    "Verde", "Amarillo", "Naranja", "Morado", "Turquesa", "Fucsia", "Lima", "Vino", "Beige",
     "Marrón", "Oro", "Plata", "Lavanda", "Cian", "Coral", "Oliva", "Rosa", "Mostaza"
   ];
 
