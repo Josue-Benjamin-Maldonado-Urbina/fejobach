@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./views/Home/Home";
 import MisionVision from "./components/Section/MisionVision";
 import Objetivos from "./components/Section/Objectives";
-import Actividades from "./components/Section/Activities";
 import Calendario from "./components/Section/Calendar";
 import Resources from "./components/Section/Resources";
 import Alabanza from "./components/Section/resources/Alabanza";
@@ -13,8 +12,8 @@ import Multimedia from "./components/Section/resources/Multimedia";
 import DeportesSociales from "./components/Section/resources/DeportesSociales";
 import Activities from "./components/Section/Activities";
 import Meet from "./components/Section/Meet";
-import SportsEventRegister from "./components/Section/Deportive";
 import ActivitiesPast from "./components/Section/ActivitiesPast";
+import PdfSection from "./screens/PdfSection";
 
 export default function App() {
   return (
@@ -32,8 +31,8 @@ export default function App() {
         <Route path="/resources/multimedia" element={<Multimedia />} />
         <Route path="/resources/deportes" element={<DeportesSociales />} />
         <Route path="/conocenos" element={<Meet />} />
-        <Route path="/actividad-deportiva" element={<SportsEventRegister />} />
         <Route path="/pasado" element={<ActivitiesPast />} />
+        <Route path="/materiales" element={<PdfSection />} />
       </Routes>
     </Router>
   );

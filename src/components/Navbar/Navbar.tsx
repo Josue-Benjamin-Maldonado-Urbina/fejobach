@@ -90,8 +90,8 @@ export default function Navbar() {
                         </Link>
                     </li>
                     <li>
-                        <Link to="/resources" className="hover:text-slate-900">
-                            Recursos
+                        <Link to="/materiales" className="hover:text-slate-900">
+                            Materiales
                         </Link>
                     </li>
                 </ul>
