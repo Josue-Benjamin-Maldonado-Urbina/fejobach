@@ -10,11 +10,8 @@ export default function Home() {
   return (
     <div className="min-h-[100dvh] bg-gradient-to-b from-white to-red-50 scroll-smooth">
       <Navbar />
-
       <main>
         <Hero />
-
-        {/* Asegúrate que estas secciones tengan ID para scroll suave */}
         <section id="mision">
           <MisionVision />
         </section>
@@ -22,7 +19,6 @@ export default function Home() {
         <section id="objetivos">
           <Objetivos />
         </section>
-
         <section id="contacto">
           <Contact></Contact>
         </section>

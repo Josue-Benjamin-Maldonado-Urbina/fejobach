@@ -34,10 +34,10 @@ export default function Hero() {
                     </a>
 
                     <a
-                        href="/pasado"
+                        href="/cms2026"
                         className="px-6 py-3 rounded-full border border-white text-white hover:bg-white hover:text-red-600 transition"
                     >
-                        Nuestras actividades
+                        Campamento Monte Sion 2026
                     </a>
                 </div>
             </div>
