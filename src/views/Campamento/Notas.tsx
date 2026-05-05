@@ -1,5 +1,4 @@
 import React from "react";
-import { FaUniversity, FaUser, FaKey, FaCreditCard } from "react-icons/fa";
 
 export default function Notas() {
   return (
