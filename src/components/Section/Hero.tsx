@@ -1,4 +1,3 @@
-import React from "react";
 import heroImage from "../../assets/hero-bg.webp";
 import facebookIcon from "../../assets/icons/facebook1.svg";
 

@@ -1,6 +1,3 @@
-import React from "react";
-import Topbar from "./Topbar";
-import Footer from "./Footer";
 
 export default function WePage() {
   return (

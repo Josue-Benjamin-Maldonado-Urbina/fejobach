@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import misionImg from "../../assets/calendar/rally.webp";
 import canaHuecaImg from "../../assets/calendar/cana-hueca.webp";
 import cultoUnidoImg from "../../assets/calendar/culto-unido.webp";

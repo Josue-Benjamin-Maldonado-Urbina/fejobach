@@ -1,4 +1,3 @@
-import React from "react";
 import { Facebook, Instagram } from "lucide-react";
 import fejobachLogo from "../../assets/fejobach-logo-2.svg";
 
