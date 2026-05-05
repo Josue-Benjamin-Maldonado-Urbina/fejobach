@@ -17,6 +17,7 @@ import PdfSection from "./screens/PdfSection";
 import Campamento from "./views/Campamento/Campamento";
 import CMS2026 from "./views/Campamento/LandingPage";
 import Notas from "./views/Campamento/Notas";
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 export default function App() {
   return (
