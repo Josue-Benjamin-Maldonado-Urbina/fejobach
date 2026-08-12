@@ -18,14 +18,15 @@ import Campamento from "./views/Campamento/Campamento";
 import CMS2026 from "./views/Campamento/LandingPage";
 import Notas from "./views/Campamento/Notas";
 import EncuestaSatisfaccion from "./components/Section/EncuestaSatistaccion";
+import UnderConstruction from "./components/Section/UnderConstruction";
 
 export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/" element={<MisionVision />} />
-        <Route path="/" element={<Objetivos />} />
+        <Route path="/" element={<UnderConstruction />} />
+        <Route path="/" element={<UnderConstruction />} />
+        <Route path="/" element={<UnderConstruction />} />
         <Route path="/activities" element={<Activities />} />
         <Route path="/calendar" element={<Calendario />} />
         <Route path="/resources" element={<Resources />} />
@@ -37,7 +38,7 @@ export default function App() {
         <Route path="/conocenos" element={<Meet />} />
         <Route path="/pasado" element={<ActivitiesPast />} />
         <Route path="/materiales" element={<PdfSection />} />
-        <Route path="/cms2026" element={<Campamento />} />
+        <Route path="/cms2026" element={<UnderConstruction />} />
         <Route path="/cms2026/oficial" element={<CMS2026 />} />
         <Route path="/cms2026/notas" element={<Notas />} />
         <Route path="/cms2026/encuesta" element={<EncuestaSatisfaccion />} />
