@@ -17,6 +17,7 @@ import PdfSection from "./screens/PdfSection";
 import Campamento from "./views/Campamento/Campamento";
 import CMS2026 from "./views/Campamento/LandingPage";
 import Notas from "./views/Campamento/Notas";
+import EncuestaSatisfaccion from "./components/Section/EncuestaSatistaccion";
 
 export default function App() {
   return (
@@ -39,6 +40,7 @@ export default function App() {
         <Route path="/cms2026" element={<Campamento />} />
         <Route path="/cms2026/oficial" element={<CMS2026 />} />
         <Route path="/cms2026/notas" element={<Notas />} />
+        <Route path="/cms2026/encuesta" element={<EncuestaSatisfaccion />} />
 
       </Routes>
     </Router>
