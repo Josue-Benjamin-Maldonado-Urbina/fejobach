@@ -17,16 +17,15 @@ import PdfSection from "./screens/PdfSection";
 import Campamento from "./views/Campamento/Campamento";
 import CMS2026 from "./views/Campamento/LandingPage";
 import Notas from "./views/Campamento/Notas";
-import EncuestaSatisfaccion from "./components/Section/EncuestaSatistaccion";
-import UnderConstruction from "./components/Section/UnderConstruction";
+import RegistroTorneo from "./components/Section/RegistroTorneo";
 
 export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<UnderConstruction />} />
-        <Route path="/" element={<UnderConstruction />} />
-        <Route path="/" element={<UnderConstruction />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/mision-vision" element={<MisionVision />} />
+        <Route path="/" element={<Objetivos />} />
         <Route path="/activities" element={<Activities />} />
         <Route path="/calendar" element={<Calendario />} />
         <Route path="/resources" element={<Resources />} />
@@ -38,11 +37,10 @@ export default function App() {
         <Route path="/conocenos" element={<Meet />} />
         <Route path="/pasado" element={<ActivitiesPast />} />
         <Route path="/materiales" element={<PdfSection />} />
-        <Route path="/cms2026" element={<UnderConstruction />} />
+        <Route path="/cms2026" element={<Campamento />} />
         <Route path="/cms2026/oficial" element={<CMS2026 />} />
         <Route path="/cms2026/notas" element={<Notas />} />
-        <Route path="/cms2026/encuesta" element={<EncuestaSatisfaccion />} />
-
+        <Route path="/evento-deportivo" element={<RegistroTorneo />} />
       </Routes>
     </Router>
   );

@@ -2,9 +2,6 @@ import { useState } from "react";
 import emailjs from "@emailjs/browser";
 import { Flame, Send, CheckCircle2, AlertTriangle, Loader2 } from "lucide-react";
 
-// ─────────────────────────────────────────────────────────────
-// CONFIGURACIÓN — reemplaza estos valores con los tuyos
-// ─────────────────────────────────────────────────────────────
 const EMAILJS_SERVICE_ID = "service_ti1a28g";
 const EMAILJS_TEMPLATE_ID = "template_99c6rbd";
 const EMAILJS_PUBLIC_KEY = "cupA8UWLwsU9jUvcN";
