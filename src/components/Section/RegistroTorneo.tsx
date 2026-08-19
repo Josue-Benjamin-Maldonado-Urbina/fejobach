@@ -21,10 +21,17 @@ interface Categoria {
   label: string;
 }
 
+interface ColorEquipo {
+  id: string;
+  nombre: string;
+  hex: string;
+}
+
 interface FormState {
   equipo: string;
   categorias: CategoriaId[];
   integrantesPorCategoria: Partial<Record<CategoriaId, string>>;
+  color: string;
   capitan: string;
   telefono: string;
   correo: string;
@@ -51,9 +58,23 @@ const CATEGORIAS: Categoria[] = [
   },
 ];
 
+const COLORES: ColorEquipo[] = [
+  { id: "rojo", nombre: "Rojo", hex: "#dc2626" },
+  { id: "naranja", nombre: "Naranja", hex: "#ff6a13" },
+  { id: "amarillo", nombre: "Amarillo", hex: "#eab308" },
+  { id: "verde", nombre: "Verde", hex: "#16a34a" },
+  { id: "azul", nombre: "Azul", hex: "#2200FF" },
+  { id: "morado", nombre: "Morado", hex: "#9333ea" },
+  { id: "negro", nombre: "Negro", hex: "#171717" },
+  { id: "blanco", nombre: "Blanco", hex: "#f5f5f5" },
+  { id: "cafe", nombre: "Café", hex: "#8A523D" },
+  { id: "rosa", nombre: "Rosa", hex: "#f472b6" },
+  
+];
+
 const CUPO_POR_CATEGORIA = 8;
 
-const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbyZ0q0BHcGRml8Duozb9HHisBk_894xM5wRePcrdhRveEkHZzpJgtNNuvbuM2Is7fT2/exec";
+const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbwuo8CQssWzYCOnFyz1mawmlhVFIszVDoEesbLwNSfMlmHCjO1mokKjAB6BWj1qXZS0/exec";
 
 const EMAILJS_SERVICE_ID = "service_9zn70uh";
 const EMAILJS_TEMPLATE_ID = "template_uqyfn4n";
@@ -63,6 +84,7 @@ const FORM_INICIAL: FormState = {
   equipo: "",
   categorias: [],
   integrantesPorCategoria: {},
+  color: "",
   capitan: "",
   telefono: "",
   correo: "",
@@ -77,6 +99,7 @@ export default function RegistroTorneo() {
   const categoriasSeleccionadas = CATEGORIAS.filter((c) =>
     form.categorias.includes(c.id)
   );
+  const colorSeleccionado = COLORES.find((c) => c.id === form.color);
 
   const handleChange =
     (campo: "equipo" | "capitan" | "telefono" | "correo") =>
@@ -111,6 +134,10 @@ export default function RegistroTorneo() {
       }));
     };
 
+  const seleccionarColor = (id: string) => {
+    setForm((f) => ({ ...f, color: id }));
+  };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
@@ -122,6 +149,11 @@ export default function RegistroTorneo() {
 
     if (form.categorias.length === 0) {
       setError("Selecciona al menos una categoría.");
+      return;
+    }
+
+    if (!form.color) {
+      setError("Elige un color para tu equipo.");
       return;
     }
 
@@ -148,6 +180,7 @@ export default function RegistroTorneo() {
       equipo: form.equipo,
       categorias: categoriasTexto,
       integrantes: integrantesTexto,
+      color: colorSeleccionado?.nombre ?? "",
       capitan: form.capitan,
       telefono: form.telefono,
       correo: form.correo,
@@ -157,6 +190,7 @@ export default function RegistroTorneo() {
       equipo: form.equipo,
       categorias: categoriasTexto,
       integrantes: integrantesTexto,
+      color: colorSeleccionado?.nombre ?? "",
       capitan: form.capitan,
       telefono: form.telefono,
       correo: form.correo || "No proporcionado",
@@ -414,15 +448,18 @@ export default function RegistroTorneo() {
                     Integrantes por categoría
                   </label>
                   {categoriasSeleccionadas.map((cat) => (
-                    <div key={cat.id} className="flex items-center gap-3">
-                      <span className="font-body text-sm text-neutral-300 w-32 shrink-0">
+                    <div
+                      key={cat.id}
+                      className="flex flex-col sm:flex-row sm:items-center gap-1.5 sm:gap-3"
+                    >
+                      <span className="font-body text-sm text-neutral-300 sm:w-32 sm:shrink-0">
                         {cat.nombre}
                       </span>
                       <input
                         type="number"
                         value={form.integrantesPorCategoria[cat.id] ?? ""}
                         onChange={handleIntegrantesChange(cat.id)}
-                        className="flex-1 bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-2.5 font-body text-sm text-white outline-none focus:border-[#ff6a13] transition-colors"
+                        className="w-full min-w-0 sm:flex-1 bg-neutral-950 border border-neutral-800 rounded-lg px-4 py-2.5 font-body text-sm text-white outline-none focus:border-[#ff6a13] transition-colors"
                         placeholder={`Mínimo ${cat.minimo}`}
                       />
                     </div>
@@ -432,6 +469,44 @@ export default function RegistroTorneo() {
                   </p>
                 </div>
               )}
+
+              <div>
+                <label className="font-mono-sport text-xs uppercase tracking-widest text-neutral-500 block mb-1.5">
+                  Color del equipo
+                </label>
+                <div className="flex flex-wrap gap-2.5">
+                  {COLORES.map((c) => {
+                    const activo = form.color === c.id;
+                    return (
+                      <button
+                        type="button"
+                        key={c.id}
+                        onClick={() => seleccionarColor(c.id)}
+                        aria-pressed={activo}
+                        title={c.nombre}
+                        className={`w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all ${
+                          activo ? "border-white scale-110" : "border-transparent"
+                        }`}
+                        style={{ backgroundColor: c.hex }}
+                      >
+                        {activo && (
+                          <CircleCheck
+                            className={`w-4 h-4 ${
+                              c.id === "blanco" || c.id === "amarillo" ? "text-black" : "text-white"
+                            }`}
+                            strokeWidth={2.5}
+                          />
+                        )}
+                      </button>
+                    );
+                  })}
+                </div>
+                <p className="font-body text-xs text-neutral-500 mt-2">
+                  {colorSeleccionado
+                    ? `Color elegido: ${colorSeleccionado.nombre}`
+                    : "Ayuda a identificar a tu equipo el día del evento."}
+                </p>
+              </div>
 
               <div className="grid md:grid-cols-2 gap-5">
                 <div>
