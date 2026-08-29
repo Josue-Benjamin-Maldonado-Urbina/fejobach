@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import emailjs from "@emailjs/browser";
 import {
   MapPin,
@@ -63,18 +63,20 @@ const COLORES: ColorEquipo[] = [
   { id: "naranja", nombre: "Naranja", hex: "#ff6a13" },
   { id: "amarillo", nombre: "Amarillo", hex: "#eab308" },
   { id: "verde", nombre: "Verde", hex: "#16a34a" },
-  { id: "azul", nombre: "Azul", hex: "#2200FF" },
+  { id: "azul", nombre: "Azul", hex: "#2563eb" },
   { id: "morado", nombre: "Morado", hex: "#9333ea" },
   { id: "negro", nombre: "Negro", hex: "#171717" },
   { id: "blanco", nombre: "Blanco", hex: "#f5f5f5" },
-  { id: "cafe", nombre: "Café", hex: "#8A523D" },
-  { id: "rosa", nombre: "Rosa", hex: "#f472b6" },
-  
+  { id: "aqua", nombre: "Aqua", hex: "#00ffff" },
+  { id: "brown", nombre: "Marrón", hex: "#a0522d" },
+  { id: "celeste", nombre: "Celeste", hex: "#add8e6" },
+  { id: "gris", nombre: "Gris", hex: "#808080" },
+  { id: "mostaza", nombre: "Mostaza", hex: "#d2b48c" },
 ];
 
 const CUPO_POR_CATEGORIA = 8;
 
-const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbwuo8CQssWzYCOnFyz1mawmlhVFIszVDoEesbLwNSfMlmHCjO1mokKjAB6BWj1qXZS0/exec";
+const GOOGLE_SHEETS_URL = "https://script.google.com/macros/s/AKfycbx3lKUH5-FiWZuXXO6f5K33dMzugJAUPxNtduovgt91wKanTLvpIl3f196NkJma6939/exec";
 
 const EMAILJS_SERVICE_ID = "service_9zn70uh";
 const EMAILJS_TEMPLATE_ID = "template_uqyfn4n";
@@ -95,11 +97,36 @@ export default function RegistroTorneo() {
   const [enviado, setEnviado] = useState(false);
   const [enviando, setEnviando] = useState(false);
   const [error, setError] = useState("");
+  const [coloresOcupados, setColoresOcupados] = useState<string[]>([]);
+  const [cargandoColores, setCargandoColores] = useState(true);
 
   const categoriasSeleccionadas = CATEGORIAS.filter((c) =>
     form.categorias.includes(c.id)
   );
   const colorSeleccionado = COLORES.find((c) => c.id === form.color);
+
+  useEffect(() => {
+    let cancelado = false;
+
+    const cargarColoresOcupados = async () => {
+      try {
+        const res = await fetch(`${GOOGLE_SHEETS_URL}?action=colores`);
+        const data = await res.json();
+        if (!cancelado && Array.isArray(data.ocupados)) {
+          setColoresOcupados(data.ocupados);
+        }
+      } catch (err) {
+        console.error("No se pudieron obtener los colores ocupados:", err);
+      } finally {
+        if (!cancelado) setCargandoColores(false);
+      }
+    };
+
+    cargarColoresOcupados();
+    return () => {
+      cancelado = true;
+    };
+  }, []);
 
   const handleChange =
     (campo: "equipo" | "capitan" | "telefono" | "correo") =>
@@ -201,27 +228,30 @@ export default function RegistroTorneo() {
     };
 
     try {
-      const sheetsPromise = fetch(GOOGLE_SHEETS_URL, {
+      const resSheets = await fetch(GOOGLE_SHEETS_URL, {
         method: "POST",
         mode: "no-cors",
         headers: { "Content-Type": "text/plain" },
         body: JSON.stringify(payloadSheets),
       });
 
-      const emailPromise = emailjs.send(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        templateParams,
-        { publicKey: EMAILJS_PUBLIC_KEY }
-      );
+      void resSheets;
 
-      const resultados = await Promise.allSettled([sheetsPromise, emailPromise]);
+      try {
+        await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, {
+          publicKey: EMAILJS_PUBLIC_KEY,
+        });
+      } catch (emailErr) {
 
-      const emailFallo = resultados[1].status === "rejected";
-      if (emailFallo) {
-        console.error("EmailJS error:", (resultados[1] as PromiseRejectedResult).reason);
+        console.error("EmailJS error:", emailErr);
+        setError(
+          "El equipo se registró correctamente, pero el correo de aviso no pudo enviarse."
+        );
       }
 
+      setColoresOcupados((prev) =>
+        prev.includes(form.color) ? prev : [...prev, form.color]
+      );
       setEnviado(true);
     } catch (err) {
       setError("No se pudo enviar el registro. Intenta de nuevo o contáctanos directamente.");
@@ -477,19 +507,21 @@ export default function RegistroTorneo() {
                 <div className="flex flex-wrap gap-2.5">
                   {COLORES.map((c) => {
                     const activo = form.color === c.id;
+                    const ocupado = coloresOcupados.includes(c.id);
                     return (
                       <button
                         type="button"
                         key={c.id}
-                        onClick={() => seleccionarColor(c.id)}
+                        onClick={() => !ocupado && seleccionarColor(c.id)}
+                        disabled={ocupado}
                         aria-pressed={activo}
-                        title={c.nombre}
-                        className={`w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all ${
+                        title={ocupado ? `${c.nombre} — ya lo tomó otro equipo` : c.nombre}
+                        className={`relative w-9 h-9 rounded-full flex items-center justify-center border-2 transition-all ${
                           activo ? "border-white scale-110" : "border-transparent"
-                        }`}
+                        } ${ocupado ? "opacity-30 cursor-not-allowed" : ""}`}
                         style={{ backgroundColor: c.hex }}
                       >
-                        {activo && (
+                        {activo && !ocupado && (
                           <CircleCheck
                             className={`w-4 h-4 ${
                               c.id === "blanco" || c.id === "amarillo" ? "text-black" : "text-white"
@@ -497,14 +529,21 @@ export default function RegistroTorneo() {
                             strokeWidth={2.5}
                           />
                         )}
+                        {ocupado && (
+                          <span className="absolute inset-0 flex items-center justify-center text-white text-lg leading-none">
+                            ×
+                          </span>
+                        )}
                       </button>
                     );
                   })}
                 </div>
                 <p className="font-body text-xs text-neutral-500 mt-2">
-                  {colorSeleccionado
+                  {cargandoColores
+                    ? "Cargando colores disponibles..."
+                    : colorSeleccionado
                     ? `Color elegido: ${colorSeleccionado.nombre}`
-                    : "Ayuda a identificar a tu equipo el día del evento."}
+                    : "Ayuda a identificar a tu equipo el día del evento. Los colores tachados ya los tomó otro equipo."}
                 </p>
               </div>
 
